@@ -3,15 +3,17 @@ module.exports = {
     [
       '@babel/preset-env',
       {
-        corejs: '3',
+        // Caution: 競技用
+        // corejs: '3',
+        // useBuiltIns: 'usage',
+        targets: ['last 1 Chrome versions'],
         modules: 'commonjs',
-        useBuiltIns: false,
       },
     ],
     [
       '@babel/preset-react',
       {
-        development: true,
+        development: process.env.NODE_ENV === 'development',
       },
     ],
   ],
