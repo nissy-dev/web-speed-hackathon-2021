@@ -25,8 +25,9 @@ const config = {
   devtool: process.env.NODE_ENV === 'production' ? false : 'inline-source-map',
   entry: {
     main: [
-      'core-js/stable',
-      'regenerator-runtime/runtime',
+      // Caution: 競技用
+      // 'core-js/stable',
+      // 'regenerator-runtime/runtime',
       'jquery-binarytransport',
       path.resolve(SRC_PATH, './index.css'),
       path.resolve(SRC_PATH, './buildinfo.js'),

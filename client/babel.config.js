@@ -3,10 +3,11 @@ module.exports = {
     [
       '@babel/preset-env',
       {
-        corejs: '3',
-        targets: ['last 1 Chrome versions'], // TODO: 競技用
+        // Caution: 競技用
+        // corejs: '3',
+        // useBuiltIns: 'usage',
+        targets: ['last 1 Chrome versions'],
         modules: 'commonjs',
-        useBuiltIns: 'usage',
       },
     ],
     [
