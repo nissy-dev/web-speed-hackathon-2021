@@ -1,8 +1,9 @@
 // TODO: mapも使わないでできるならそうしたい
 import map from 'lodash/map';
-import max from 'lodash/max';
+import mean from 'lodash/mean';
 import zip from 'lodash/zip';
 import chunk from 'lodash/chunk';
+import max from 'lodash/max';
 
 import React from 'react';
 
