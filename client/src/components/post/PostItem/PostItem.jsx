@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import moment from 'moment';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -58,8 +58,8 @@ const PostItem = ({ post }) => {
           ) : null}
           <p className="mt-2 text-sm sm:mt-4">
             <Link className="text-gray-500 hover:underline" to={`/posts/${post.id}`}>
-              <time dateTime={dayjs(post.createdAt).toISOString()}>
-                {dayjs(post.createdAt).locale('ja').format('LL')}
+              <time dateTime={moment(post.createdAt).toISOString()}>
+                {moment(post.createdAt).locale('ja').format('LL')}
               </time>
             </Link>
           </p>

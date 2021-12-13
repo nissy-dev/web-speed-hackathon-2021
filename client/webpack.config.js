@@ -1,9 +1,7 @@
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
 
 const SRC_PATH = path.resolve(__dirname, './src');
@@ -22,19 +20,18 @@ const config = {
     },
     static: [PUBLIC_PATH, UPLOAD_PATH],
   },
-  devtool: process.env.NODE_ENV === 'production' ? false : 'inline-source-map',
+  devtool: 'inline-source-map',
   entry: {
     main: [
-      // Caution: 競技用
-      // 'core-js/stable',
-      // 'regenerator-runtime/runtime',
+      'core-js',
+      'regenerator-runtime/runtime',
       'jquery-binarytransport',
       path.resolve(SRC_PATH, './index.css'),
       path.resolve(SRC_PATH, './buildinfo.js'),
       path.resolve(SRC_PATH, './index.jsx'),
     ],
   },
-  mode: process.env.NODE_ENV,
+  mode: 'none',
   module: {
     rules: [
       {
@@ -53,7 +50,7 @@ const config = {
     ],
   },
   output: {
-    filename: 'scripts/[name].[contentHash].js',
+    filename: 'scripts/[name].js',
     path: DIST_PATH,
   },
   plugins: [
@@ -67,20 +64,16 @@ const config = {
       BUILD_DATE: new Date().toISOString(),
       // Heroku では SOURCE_VERSION 環境変数から commit hash を参照できます
       COMMIT_HASH: process.env.SOURCE_VERSION || '',
-      NODE_ENV: process.env.NODE_ENV,
+      NODE_ENV: 'development',
     }),
     new MiniCssExtractPlugin({
-      filename: 'styles/[name].[contentHash].css',
+      filename: 'styles/[name].css',
     }),
     new HtmlWebpackPlugin({
+      inject: false,
       template: path.resolve(SRC_PATH, './index.html'),
-      hash: true,
     }),
   ],
-  optimization: {
-    minimize: true,
-    minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
-  },
   resolve: {
     extensions: ['.js', '.jsx'],
     fallback: {
