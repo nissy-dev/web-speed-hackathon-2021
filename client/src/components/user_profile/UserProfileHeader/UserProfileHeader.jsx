@@ -1,9 +1,9 @@
 import FastAverageColor from 'fast-average-color';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import React from 'react';
 
 import { getProfileImagePath } from '../../../utils/get_path';
-import { FontAwesomeIcon } from '../../foundation/FontAwesomeIcon';
+import { FontAwesomeIcon, faCalendarAlt } from '../../foundation/FontAwesomeIcon';
 
 /**
  * @typedef {object} Props
@@ -35,11 +35,11 @@ const UserProfileHeader = ({ user }) => {
         <p className="pt-2">{user.description}</p>
         <p className="pt-2 text-gray-600 text-sm">
           <span className="pr-1">
-            <FontAwesomeIcon iconType="calendar-alt" styleType="regular" />
+            <FontAwesomeIcon icon={faCalendarAlt} />
           </span>
           <span>
-            <time dateTime={moment(user.createdAt).toISOString()}>
-              {moment(user.createdAt).locale('ja').format('LL')}
+            <time dateTime={dayjs(user.createdAt).toISOString()}>
+              {dayjs(user.createdAt).locale('ja').format('LL')}
             </time>
             からサービスを利用しています
           </span>
