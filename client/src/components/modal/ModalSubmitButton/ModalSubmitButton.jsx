@@ -25,7 +25,7 @@ const ModalSubmitButton = ({ children, disabled, loading, onClick }) => {
       {loading ? (
         <span className="pr-2">
           <span className="inline-block animate-spin">
-            <FontAwesomeIcon icon={faCircleNotch} />
+            <FontAwesomeIcon iconType="circle-notch" styleType="solid" />
           </span>
         </span>
       ) : null}
