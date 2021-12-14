@@ -1,4 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
+import { FontAwesomeIcon as FontAwesomeIconBase } from '@fortawesome/react-fontawesome';
 
 import { faHome } from '@fortawesome/free-solid-svg-icons/faHome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons/faEdit';
@@ -15,6 +16,10 @@ import { faMusic } from '@fortawesome/free-solid-svg-icons/faMusic';
 import { faVideo } from '@fortawesome/free-solid-svg-icons/faVideo';
 
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons/faCalendarAlt';
+
+const FontAwesomeIcon = ({ icon }) => {
+  return <FontAwesomeIconBase icon={icon} className="font-awesome inline-block leading-none fill-current" />;
+};
 
 export {
   FontAwesomeIcon,
