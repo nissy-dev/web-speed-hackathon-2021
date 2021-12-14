@@ -1,6 +1,7 @@
 import bodyParser from 'body-parser';
 import Express from 'express';
 import session from 'express-session';
+import compression from 'compression';
 
 import { apiRouter } from './routes/api';
 import { staticRouter } from './routes/static';
@@ -8,6 +9,8 @@ import { staticRouter } from './routes/static';
 const app = Express();
 
 app.set('trust proxy', true);
+
+app.use(compression());
 
 app.use(
   session({
@@ -19,14 +22,6 @@ app.use(
 );
 app.use(bodyParser.json());
 app.use(bodyParser.raw({ limit: '10mb' }));
-
-app.use((_req, res, next) => {
-  res.header({
-    'Cache-Control': 'max-age=0, no-transform',
-    Connection: 'close',
-  });
-  return next();
-});
 
 app.use('/api/v1', apiRouter);
 app.use(staticRouter);
