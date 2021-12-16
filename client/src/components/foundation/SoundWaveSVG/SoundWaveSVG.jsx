@@ -6,16 +6,17 @@ import max from 'lodash/max';
 import React from 'react';
 
 /**
- * @param {ArrayBuffer} data
+ * @param {Blob} data
  * @returns {Promise<{ max: number, peaks: number[] }}
  */
 async function calculate(data) {
+  const arrayBuffer = await data.arrayBuffer();
   const audioCtx = new AudioContext();
 
   // 音声をデコードする
   /** @type {AudioBuffer} */
   const buffer = await new Promise((resolve, reject) => {
-    audioCtx.decodeAudioData(data.slice(0), resolve, reject);
+    audioCtx.decodeAudioData(arrayBuffer.slice(0), resolve, reject);
   });
   // 左の音声データの絶対値を取る
   const leftData = map(buffer.getChannelData(0), Math.abs);
@@ -36,7 +37,7 @@ async function calculate(data) {
 
 /**
  * @typedef {object} Props
- * @property {ArrayBuffer} soundData
+ * @property {Blob} soundData
  */
 
 /**

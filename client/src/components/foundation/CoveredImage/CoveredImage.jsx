@@ -1,9 +1,5 @@
+import React, { useState } from 'react';
 import classNames from 'classnames';
-import sizeOf from 'image-size';
-import React from 'react';
-
-import { useFetch } from '../../../hooks/use_fetch';
-import { fetchBinary } from '../../../utils/fetchers';
 
 /**
  * @typedef {object} Props
@@ -16,17 +12,9 @@ import { fetchBinary } from '../../../utils/fetchers';
  * @type {React.VFC<Props>}
  */
 const CoveredImage = ({ alt, src }) => {
-  const { data, isLoading } = useFetch(src, fetchBinary);
-
-  const imageSize = React.useMemo(() => {
-    return data !== null ? sizeOf(Buffer.from(data)) : null;
-  }, [data]);
-
-  const blobUrl = React.useMemo(() => {
-    return data !== null ? URL.createObjectURL(new Blob([data])) : null;
-  }, [data]);
-
+  const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
   const [containerSize, setContainerSize] = React.useState({ height: 0, width: 0 });
+
   /** @type {React.RefCallback<HTMLDivElement>} */
   const callbackRef = React.useCallback((el) => {
     setContainerSize({
@@ -35,12 +23,13 @@ const CoveredImage = ({ alt, src }) => {
     });
   }, []);
 
-  if (isLoading || data === null || blobUrl === null) {
-    return null;
-  }
+  /** @type {React.ReactEventHandler<HTMLImageElement>} */
+  const handleOnLoadImg = React.useCallback((event) => {
+    setImageSize({ width: event.target.offsetWidth, height: event.target.offsetHeight });
+  });
 
   const containerRatio = containerSize.height / containerSize.width;
-  const imageRatio = imageSize?.height / imageSize?.width;
+  const imageRatio = imageSize.height / imageSize.width;
 
   return (
     <div ref={callbackRef} className="relative w-full h-full overflow-hidden">
@@ -51,6 +40,7 @@ const CoveredImage = ({ alt, src }) => {
           'w-full h-auto': containerRatio <= imageRatio,
         })}
         src={src}
+        onLoad={handleOnLoadImg}
         loading="lazy"
       />
     </div>

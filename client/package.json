@@ -10,7 +10,6 @@
     "develop": "cross-env NODE_ENV=development webpack serve"
   },
   "dependencies": {
-    "buffer": "6.0.3",
     "classnames": "2.3.1",
     "core-js": "3.19.1",
     "dayjs": "^1.10.7",
@@ -23,7 +22,6 @@
     "moment": "2.29.1",
     "normalize.css": "8.0.1",
     "omggif": "1.0.10",
-    "pako": "2.0.4",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-helmet": "6.1.0",
