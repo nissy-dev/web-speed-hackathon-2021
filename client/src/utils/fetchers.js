@@ -7,6 +7,10 @@ async function fetchBinary(url) {
     method: 'GET',
     url,
   });
+  if (!result.ok) {
+    const obj = await result.json();
+    throw new Error(obj.message);
+  }
   return result.blob();
 }
 
@@ -21,7 +25,7 @@ async function fetchJSON(url) {
   });
   if (!result.ok) {
     const obj = await result.json();
-    return Promise.reject(obj.message);
+    throw new Error(obj.message);
   }
   return result.json();
 }
@@ -33,15 +37,17 @@ async function fetchJSON(url) {
  * @returns {Promise<T>}
  */
 async function sendFile(url, file) {
-  const formData = new FormData();
-  formData.append('file', file);
   const result = await fetch(url, {
     headers: {
       'Content-Type': 'application/octet-stream',
     },
     method: 'POST',
-    body: formData,
+    body: file,
   });
+  if (!result.ok) {
+    const obj = await result.json();
+    throw new Error(obj.message);
+  }
   return result.json();
 }
 
@@ -60,6 +66,10 @@ async function sendJSON(url, data) {
     method: 'POST',
     body: jsonString,
   });
+  if (!result.ok) {
+    const obj = await result.json();
+    throw new Error(obj.message);
+  }
   return result.json();
 }
 

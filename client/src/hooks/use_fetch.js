@@ -27,7 +27,6 @@ export function useFetch(apiPath, fetcher) {
     }));
 
     const promise = fetcher(apiPath);
-    console.log(promise);
 
     promise
       .then((data) => {
