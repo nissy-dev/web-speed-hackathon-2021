@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import { FontAwesomeIcon } from '../../foundation/FontAwesomeIcon';
+import { FontAwesomeIcon, faCircleNotch } from '../../foundation/FontAwesomeIcon';
 
 /**
  * @typedef {object} Props
