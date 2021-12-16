@@ -1,18 +1,17 @@
-import { gzip } from 'pako';
-
 /**
  * @param {string} url
- * @returns {Promise<ArrayBuffer>}
+ * @returns {Promise<Blob>}
  */
 async function fetchBinary(url) {
-  const result = await $.ajax({
-    async: false,
-    dataType: 'binary',
+  const result = await fetch(url, {
     method: 'GET',
-    responseType: 'arraybuffer',
     url,
   });
-  return result;
+  if (!result.ok) {
+    const obj = await result.json();
+    throw new Error(obj.message);
+  }
+  return result.blob();
 }
 
 /**
@@ -21,13 +20,14 @@ async function fetchBinary(url) {
  * @returns {Promise<T>}
  */
 async function fetchJSON(url) {
-  const result = await $.ajax({
-    async: false,
-    dataType: 'json',
+  const result = await fetch(url, {
     method: 'GET',
-    url,
   });
-  return result;
+  if (!result.ok) {
+    const obj = await result.json();
+    throw new Error(obj.message);
+  }
+  return result.json();
 }
 
 /**
@@ -37,18 +37,18 @@ async function fetchJSON(url) {
  * @returns {Promise<T>}
  */
 async function sendFile(url, file) {
-  const result = await $.ajax({
-    async: false,
-    data: file,
-    dataType: 'json',
+  const result = await fetch(url, {
     headers: {
       'Content-Type': 'application/octet-stream',
     },
     method: 'POST',
-    processData: false,
-    url,
+    body: file,
   });
-  return result;
+  if (!result.ok) {
+    const obj = await result.json();
+    throw new Error(obj.message);
+  }
+  return result.json();
 }
 
 /**
@@ -59,22 +59,18 @@ async function sendFile(url, file) {
  */
 async function sendJSON(url, data) {
   const jsonString = JSON.stringify(data);
-  const uint8Array = new TextEncoder().encode(jsonString);
-  const compressed = gzip(uint8Array);
-
-  const result = await $.ajax({
-    async: false,
-    data: compressed,
-    dataType: 'json',
+  const result = await fetch(url, {
     headers: {
-      'Content-Encoding': 'gzip',
       'Content-Type': 'application/json',
     },
     method: 'POST',
-    processData: false,
-    url,
+    body: jsonString,
   });
-  return result;
+  if (!result.ok) {
+    const obj = await result.json();
+    throw new Error(obj.message);
+  }
+  return result.json();
 }
 
 export { fetchBinary, fetchJSON, sendFile, sendJSON };

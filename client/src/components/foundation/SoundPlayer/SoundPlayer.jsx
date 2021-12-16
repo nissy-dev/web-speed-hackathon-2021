@@ -19,7 +19,7 @@ const SoundPlayer = ({ sound }) => {
   const { data, isLoading } = useFetch(getSoundPath(sound.id), fetchBinary);
 
   const blobUrl = React.useMemo(() => {
-    return data !== null ? URL.createObjectURL(new Blob([data])) : null;
+    return data !== null ? URL.createObjectURL(data) : null;
   }, [data]);
 
   const [currentTimeRatio, setCurrentTimeRatio] = React.useState(0);
