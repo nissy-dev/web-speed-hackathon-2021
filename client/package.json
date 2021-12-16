@@ -4,12 +4,16 @@
   "version": "0.0.1",
   "license": "MPL-2.0",
   "scripts": {
-    "analyze": "cross-env NODE_ENV=development webpack --analyze",
+    "analyze": "cross-env NODE_ENV=production webpack --analyze",
     "prebuild": "rimraf ../dist",
     "build": "cross-env NODE_ENV=production webpack",
     "develop": "cross-env NODE_ENV=development webpack serve"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-regular-svg-icons": "^5.15.4",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/react-fontawesome": "^0.1.16",
     "classnames": "2.3.1",
     "core-js": "3.19.1",
     "dayjs": "^1.10.7",
@@ -27,7 +31,6 @@
     "react-helmet": "6.1.0",
     "react-router-dom": "6.0.2",
     "regenerator-runtime": "0.13.9",
-    "standardized-audio-context": "25.3.15",
     "tailwindcss": "2.2.19",
     "wicg-inert": "3.1.1"
   },

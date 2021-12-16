@@ -6,7 +6,7 @@ import React from 'react';
 import { useFetch } from '../../../hooks/use_fetch';
 import { fetchBinary } from '../../../utils/fetchers';
 import { AspectRatioBox } from '../AspectRatioBox';
-import { FontAwesomeIcon } from '../FontAwesomeIcon';
+import { faPause, faPlay, FontAwesomeIcon } from '../FontAwesomeIcon';
 
 /**
  * @typedef {object} Props
@@ -82,7 +82,7 @@ const PausableMovie = ({ src }) => {
             },
           )}
         >
-          <FontAwesomeIcon iconType={isPlaying ? 'pause' : 'play'} styleType="solid" />
+          <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
         </div>
       </button>
     </AspectRatioBox>
