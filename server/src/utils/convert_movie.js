@@ -21,19 +21,23 @@ listFiles(MOVIE_OUTDIR).forEach((filePath) => {
   });
 });
 
-listFiles(MOVIE_DIR).forEach(async (filePath, index) => {
-  if (index > 0) {
-    return;
+(async () => {
+  for (const filePath of listFiles(MOVIE_DIR)) {
+    if (ffmpeg.isLoaded() === false) {
+      await ffmpeg.load();
+    }
+    const fileName = filePath.split('/').reverse()[0];
+    const outFileName = fileName.slice(0, -3) + 'gif';
+    ffmpeg.FS('writeFile', fileName, new Uint8Array(fs.readFileSync(filePath)));
+    // await ffmpeg.run('-i', fileName, '-vcodec', 'libx264', '-r', '5', '-an', outFileName);
+    // ffmpeg -y -i file.mp4 -vf palettegen palette.png
+    // ffmpeg -y -i file.mp4 -i palette.png -filter_complex paletteuse -r 10 -s 320x480 file.gif
+    await ffmpeg.run('-i', fileName, '-vcodec', 'libx264', '-r', '5', '-vf', 'scale=640:-1', '-an', outFileName);
+    const outPath = filePath.replace('movies_', 'movies').slice(0, -3) + 'gif';
+    console.log(`converted ${filePath} to ${outPath}`);
+    await fs.promises.writeFile(outPath, ffmpeg.FS('readFile', outFileName));
+    console.log(`converted ${filePath} to ${outPath}`);
+    ffmpeg.FS('unlink', fileName);
+    ffmpeg.FS('unlink', outFileName);
   }
-  await ffmpeg.load();
-  console.log('Waai');
-  const fileName = filePath.split('/').reverse()[0];
-  ffmpeg.FS('writeFile', 'file', new Uint8Array(fs.readFileSync(filePath)));
-  // -r はフレームレート
-  // -vcodec エンコード方法
-  // -vfはリサイズとか
-  await ffmpeg.run('-i', 'file', '-t', '5', '-r', '5', '-vf', 'scale=640:-1', '-vcodec', 'h264', '-an', fileName);
-  const outPath = filePath.replace('movies_', 'movies');
-  await fs.promises.writeFile(outPath, ffmpeg.FS('readFile', fileName));
-  return;
-});
+})();
