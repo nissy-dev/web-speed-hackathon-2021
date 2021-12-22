@@ -27,13 +27,23 @@ listFiles(MOVIE_OUTDIR).forEach((filePath) => {
       await ffmpeg.load();
     }
     const fileName = filePath.split('/').reverse()[0];
-    const outFileName = fileName.slice(0, -3) + 'gif';
+    const outFileName = fileName.slice(0, -3) + 'mp4';
     ffmpeg.FS('writeFile', fileName, new Uint8Array(fs.readFileSync(filePath)));
-    // await ffmpeg.run('-i', fileName, '-vcodec', 'libx264', '-r', '5', '-an', outFileName);
-    // ffmpeg -y -i file.mp4 -vf palettegen palette.png
-    // ffmpeg -y -i file.mp4 -i palette.png -filter_complex paletteuse -r 10 -s 320x480 file.gif
-    await ffmpeg.run('-i', fileName, '-vcodec', 'libx264', '-r', '5', '-vf', 'scale=640:-1', '-an', outFileName);
-    const outPath = filePath.replace('movies_', 'movies').slice(0, -3) + 'gif';
+    await ffmpeg.run(
+      '-i',
+      fileName,
+      '-r',
+      '10',
+      '-pix_fmt',
+      'yuv420p',
+      '-movflags',
+      'faststart',
+      '-vf',
+      'scale=640:640',
+      '-an',
+      outFileName,
+    );
+    const outPath = filePath.replace('movies_', 'movies').slice(0, -3) + 'mp4';
     console.log(`converted ${filePath} to ${outPath}`);
     await fs.promises.writeFile(outPath, ffmpeg.FS('readFile', outFileName));
     console.log(`converted ${filePath} to ${outPath}`);

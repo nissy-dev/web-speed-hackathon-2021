@@ -13,14 +13,13 @@ async function convertMovie(buffer, options) {
     .filter(Boolean)
     .join(',');
 
-  const exportFile = `export.${options.extension ?? 'gif'}`;
+  const exportFile = `export.${options.extension ?? 'mp4'}`;
 
   if (ffmpeg.isLoaded() === false) {
     await ffmpeg.load();
   }
 
   ffmpeg.FS('writeFile', 'file', new Uint8Array(buffer));
-
   await ffmpeg.run(...['-i', 'file', '-t', '5', '-r', '10', '-vf', `crop=${cropOptions}`, '-an', exportFile]);
 
   return ffmpeg.FS('readFile', exportFile);
