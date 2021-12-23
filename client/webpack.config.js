@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const PreloadWebpackPlugin = require('@vue/preload-webpack-plugin');
+// const PreloadWebpackPlugin = require('@vue/preload-webpack-plugin');
 const webpack = require('webpack');
 
 const SRC_PATH = path.resolve(__dirname, './src');
@@ -67,15 +67,15 @@ const config = {
       template: path.resolve(SRC_PATH, './index.html'),
       publicPath: '/',
     }),
-    new PreloadWebpackPlugin({
-      rel: 'preload',
-      include: 'all',
-      fileBlacklist: [/\.js/],
-      as(entry) {
-        if (/\.css$/.test(entry)) return 'style';
-        return 'script';
-      },
-    }),
+    // new PreloadWebpackPlugin({
+    //   rel: 'preload',
+    //   include: 'all',
+    //   fileBlacklist: [/\.js/],
+    //   as(entry) {
+    //     if (/\.css$/.test(entry)) return 'style';
+    //     return 'script';
+    //   },
+    // }),
   ],
   optimization: {
     minimize: true,
