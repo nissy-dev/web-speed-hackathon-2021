@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { AspectRatioBox } from '../AspectRatioBox';
 import { faPause, faPlay, FontAwesomeIcon } from '../FontAwesomeIcon';
@@ -16,7 +16,8 @@ import { faPause, faPlay, FontAwesomeIcon } from '../FontAwesomeIcon';
 const PausableMovie = ({ src }) => {
   /** @type {React.RefObject<HTMLVideoElement */
   const animatorRef = React.useRef(null);
-  const [isPlaying, setIsPlaying] = React.useState(true);
+  const [isPlaying, setIsPlaying] = React.useState(false);
+
   const handleClick = React.useCallback(() => {
     setIsPlaying((isPlaying) => {
       if (isPlaying) {
@@ -28,17 +29,22 @@ const PausableMovie = ({ src }) => {
     });
   }, []);
 
+  useEffect(() => {
+    animatorRef.current?.pause();
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      animatorRef.current?.pause();
+      setIsPlaying(false);
+    } else {
+      animatorRef.current?.play();
+      setIsPlaying(true);
+    }
+  });
+
   return (
     <AspectRatioBox aspectHeight={1} aspectWidth={1}>
       <button className="group relative block w-full h-full" onClick={handleClick} type="button">
-        <video
-          ref={animatorRef}
-          src={src}
-          className="w-full"
-          loop
-          muted
-          autoPlay={window.matchMedia('(prefers-reduced-motion: reduce)').matches ? false : true}
-        />
+        <video ref={animatorRef} src={src} className="w-full" loop muted autoPlay />
         <div
           className={classNames(
             'absolute left-1/2 top-1/2 flex items-center justify-center w-16 h-16 text-white text-3xl bg-black bg-opacity-50 rounded-full transform -translate-x-1/2 -translate-y-1/2',
