@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { AspectRatioBox } from '../AspectRatioBox';
 import { faPause, faPlay, FontAwesomeIcon } from '../FontAwesomeIcon';
@@ -43,6 +43,18 @@ const PausableMovie = ({ src }) => {
       return !isPlaying;
     });
   }, []);
+
+  useEffect(() => {
+    animatorRef.current?.pause();
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      animatorRef.current?.pause();
+      setIsPlaying(false);
+    } else {
+      animatorRef.current?.play();
+      setIsPlaying(true);
+    }
+  });
 
   return (
     <AspectRatioBox aspectHeight={1} aspectWidth={1}>
