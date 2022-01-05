@@ -3,8 +3,9 @@ module.exports = {
     [
       '@babel/preset-env',
       {
-        targets: ['last 1 Chrome versions'],
-        modules: 'commonjs',
+        // 必要な分だけpolyfillを読み込むようにする
+        useBuiltIns: 'usage',
+        corejs: 3,
       },
     ],
     [

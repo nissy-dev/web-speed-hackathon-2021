@@ -12,6 +12,13 @@ import { userRouter } from './api/user';
 
 const router = Router();
 
+router.use((_req, res, next) => {
+  res.header({
+    'Cache-Control': 'no-store',
+  });
+  return next();
+});
+
 router.use(initializeRouter);
 router.use(userRouter);
 router.use(postRouter);
