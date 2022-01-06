@@ -1,7 +1,7 @@
-import dayjs from 'dayjs';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { dayjs } from '../../../utils/dayjs';
 import { getProfileImagePath } from '../../../utils/get_path';
 
 /**
