@@ -2,8 +2,8 @@
  * @param {string} imageId
  * @returns {string}
  */
-function getImagePath(imageId) {
-  return `/images/${imageId}.webp`;
+function getImagePath(imageId, isSmall) {
+  return `/images/${imageId}${isSmall ? '-small' : ''}.webp`;
 }
 
 /**
