@@ -17,6 +17,7 @@
     "@babel/preset-env": "7.16.4",
     "@ffmpeg/core": "0.10.0",
     "@ffmpeg/ffmpeg": "0.10.1",
+    "audio-decode": "^1.4.0",
     "bcrypt": "5.0.1",
     "compression": "^1.7.4",
     "connect-history-api-fallback": "1.6.0",
@@ -29,13 +30,15 @@
     "mkdirp": "1.0.4",
     "music-metadata": "7.11.4",
     "npm-run-all": "4.1.5",
+    "ogg.js": "^0.1.0",
     "rimraf": "3.0.2",
     "sequelize": "6.11.0",
     "serve-static": "1.14.1",
     "sharp": "0.29.3",
     "sqlite3": "5.0.2",
     "ulid": "2.3.0",
-    "uuid": "8.3.2"
+    "uuid": "8.3.2",
+    "vorbis.js": "^0.1.1"
   },
   "devDependencies": {
     "@types/bcrypt": "10.0.28-alpha",

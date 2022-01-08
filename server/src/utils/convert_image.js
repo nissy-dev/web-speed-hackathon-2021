@@ -10,23 +10,23 @@ const listFiles = (dir) =>
     .flatMap((dirent) => (dirent.isFile() ? [`${dir}/${dirent.name}`] : listFiles(`${dir}/${dirent.name}`)));
 
 // delete old files
-listFiles(IMAGE_OUTDIR).forEach((filePath) => {
-  fs.unlink(filePath, function (err) {
-    if (err) {
-      throw err;
-    }
-    console.log(`deleted ${filePath}`);
-  });
-});
+// listFiles(IMAGE_OUTDIR).forEach((filePath) => {
+//   fs.unlink(filePath, function (err) {
+//     if (err) {
+//       throw err;
+//     }
+//     console.log(`deleted ${filePath}`);
+//   });
+// });
 
 // profile 400 400
 listFiles(IMAGE_DIR).forEach((filePath) => {
   const outPath = filePath.replace('images_', 'images');
-  const outFile = outPath.slice(0, -3) + 'webp';
+  const outFile = outPath.slice(0, -4) + '-small' + '.webp';
   const globalRegex = new RegExp('profiles', 'g');
-  let size = 640;
+  let size = 320;
   if (globalRegex.test(outFile)) {
-    size = 144;
+    return;
   }
   sharp(filePath)
     .resize({ fit: 'cover', width: size })
